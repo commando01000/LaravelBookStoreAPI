@@ -7,6 +7,7 @@ use App\Http\Requests\StoreAuthorRequest;
 use App\Http\Requests\UpdateAuthorRequest;
 use App\Http\Resources\AuthorsResource;
 use Faker\Factory;
+use Illuminate\Contracts\Cache\Store;
 use Illuminate\Http\Request;
 
 class AuthorController extends Controller
@@ -20,14 +21,19 @@ class AuthorController extends Controller
         return new AuthorsResource($authors);
     }
 
+    public function GetAllAuthorsWithBooks()
+    {
+        $authorsWithBooks = Author::all()->load('Books');
+        return new AuthorsResource($authorsWithBooks);
+    }
+
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreAuthorRequest $request, Author $author)
     {
-        $faker = Factory::create(1);
         $author = Author::create([
-            'name' => $faker->name,
+            'name' => $request->name,
         ]);
         return new AuthorsResource($author);
     }
@@ -37,7 +43,8 @@ class AuthorController extends Controller
      */
     public function show(Author $author)
     {
-        return new AuthorsResource($author);
+        $authorWithBooks = Author::with('books')->find($author->id);
+        return new AuthorsResource($authorWithBooks);
     }
 
     /**
@@ -51,7 +58,7 @@ class AuthorController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Author $author)
+    public function update(StoreAuthorRequest $request, Author $author)
     {
         $author->update([
             'name' => $request->name,

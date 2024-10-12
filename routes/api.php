@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthorController;
+use App\Http\Controllers\BookController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +22,14 @@ Route::middleware('auth:api')->prefix('v1')->group(function () {
     });
 
     Route::apiResource('authors', AuthorController::class);
+
+    Route::apiResource('books', BookController::class);
+
+    // get books with authors
+    Route::get('/books-with-authors', [BookController::class, 'GetAllBooksWithAuthors']);
+
+    // get authors with books
+    Route::get('/authors-with-books', [AuthorController::class, 'GetAllAuthorsWithBooks']);
 
     Route::get('/test', function (Request $request) {
         return 'Authenticated';

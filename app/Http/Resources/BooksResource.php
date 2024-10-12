@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class AuthorsResource extends JsonResource
+class BooksResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,9 +17,10 @@ class AuthorsResource extends JsonResource
         return [
             'message' => 'Success',
             'status' => 200,
-            'type' => 'authors',
+            'type' => 'books',
             'count' => ($this->count()),
-            'authors' => $this->resource->toArray(),
+            // get books with authors
+            'books' => $this->resource->toArray(),
         ];
     }
 }
