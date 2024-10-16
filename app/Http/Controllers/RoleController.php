@@ -50,7 +50,7 @@ class RoleController extends Controller
 
         // find user by email
         $user = auth()->user();
-
+        /** @var App\Models\User $user */
         if (!$user) {
             return response()->json(['error' => 'User not found'], 404);
         }
