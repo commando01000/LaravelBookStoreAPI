@@ -48,14 +48,6 @@ class AuthorController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Author $author)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(StoreAuthorRequest $request, Author $author)

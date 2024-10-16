@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\RoleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -30,6 +31,10 @@ Route::middleware('auth:api')->prefix('v1')->group(function () {
 
     // get authors with books
     Route::get('/authors-with-books', [AuthorController::class, 'GetAllAuthorsWithBooks']);
+
+    Route::apiResource('roles', RoleController::class);
+
+    Route::get('/roles-with-permissions', [RoleController::class, 'getRolesWithPermissions']);
 
     Route::get('/test', function (Request $request) {
         return 'Authenticated';

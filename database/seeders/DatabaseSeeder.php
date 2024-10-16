@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,7 +20,13 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-        $this->call(AuthorSeeder::class);
-        $this->call(BookSeeder::class);
+        // if there is no data call the seeders 
+        // if database is created do not run the seeders
+        if (Schema::hasTable('users') && DB::table('users')->count() == 0) {
+            // If the database is not created, run the seeders
+            $this->call(AuthorSeeder::class);
+            $this->call(BookSeeder::class);
+            $this->call(UserSeeder::class);
+        }
     }
 }
