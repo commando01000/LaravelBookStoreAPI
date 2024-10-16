@@ -48,9 +48,10 @@ class RoleController extends Controller
 
         // Assign the created role to the current authenticated user
 
-        // find user by email
+        // get auth user
         $user = auth()->user();
         /** @var App\Models\User $user */
+
         if (!$user) {
             return response()->json(['error' => 'User not found'], 404);
         }
